@@ -1,0 +1,17 @@
+services:
+  event-gate:
+    build: .
+    image: event-gate:latest
+    container_name: event-gate
+    ports:
+      - "8000:8000"
+    environment:
+      GATE_DB_PATH: /data/gate.db
+      GAP_TIMEOUT_SECONDS: "5"
+      SWEEP_INTERVAL_SECONDS: "0.5"
+    volumes:
+      - event-gate-data:/data
+    restart: unless-stopped
+
+volumes:
+  event-gate-data:
