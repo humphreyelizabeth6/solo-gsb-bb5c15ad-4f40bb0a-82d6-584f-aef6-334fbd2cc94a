@@ -1,0 +1,16 @@
+services:
+  webhook-gate:
+    build: .
+    image: webhook-event-gate
+    ports:
+      - "8000:8000"
+    environment:
+      GAP_TIMEOUT_SECONDS: "30"   # 缺口等待超时（秒）
+      SWEEP_INTERVAL_SECONDS: "1" # 后台超时扫描间隔（秒）
+      DATABASE_PATH: /data/events.db
+    volumes:
+      - gate-data:/data           # SQLite 数据持久化
+    restart: unless-stopped
+
+volumes:
+  gate-data:
